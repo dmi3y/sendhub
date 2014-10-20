@@ -1,0 +1,50 @@
+/*Thanks: http://codepen.io/nvillec/pen/huqns*/
+form {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+input,
+button {
+    display: block;
+    width: 81%;
+    margin: 20px auto;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+}
+
+button {
+    background-color: #27ae60;
+    transition:background-color 0.1s ease;
+    color: #fff;
+    width: 100%
+}
+
+button:hover {
+    background-color: #2ecc71;
+}
+
+button[disabled],
+button[disabled]:hover {
+    background-color: #d5d5d5;
+}
+
+input {
+    padding-left: 40px;
+}
+
+textarea {
+    width: 97%;
+    height: 100px;
+}
+
+/*input[name="username"] {
+    background: #eee url("http://oi59.tinypic.com/e7mr0z.jpg") no-repeat;
+    background-position: 10px 50%;
+}
+
+input[name="password"] {
+    background: #eee url("http://oi60.tinypic.com/os92eo.jpg") no-repeat;
+    background-position: 10px 50%;
+}*/

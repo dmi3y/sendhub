@@ -30,14 +30,16 @@ function validateNumber(number) {
     var
         isValid;
 
+    number = number || '';
+    number = number.replace(/[()-\s\.]/g, '');
     isValid = number.length === 10;
 
     return isValid;
 }
 
-function sendMessage(msg) {
+function sendMessage() {
 
-    console.log(msg);
+    console.log.apply(console, arguments);
 }
 
 function parseJson(data) {

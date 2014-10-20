@@ -3,7 +3,7 @@ $(function() {
 
     var
         okay = 'okay',
-        wrong = 'wrong',
+        wrong = 'wrong shake animated',
         tm = 2000;
 
     SendHub.flashFeedback = {

@@ -2,64 +2,83 @@ $(function() {
 'use strict';
 
     var
-        View,
-        hlprs = SendHub.hlprs;
+        hlprs = SendHub.hlprs,
+        ffb = SendHub.flashFeedback;
 
-    View = Backbone.View.extend({
-        el: $('#mainApp'),
-        events: {
-            'submit form#loginForm': 'loginAction'
-        },
-        initialize: function() {
+    SendHub.LoginModel = Backbone.Model.extend({
+        url: '/login',
+        validate: function(attrs) {
 
-            _.bindAll(this, 'render', 'loginAction');
-            this.render();
-        },
-        render: function() {
+            if (!hlprs.validateNumber(attrs.NUMBER) || !attrs.APIKEY || !attrs.SOLT) {
 
-            $(this.el).html(SendHub.tmpl.app.login());
-            this.button = $('#login');
-        },
-        loginAction: function(ev) {
-            var
-                self = this,
-                submitData;
-
-            ev.preventDefault();
-            submitData = hlprs.getSubmitData(ev.target);
-            submitData.SOLT = submitData.APIKEY;
-
-            if (hlprs.validateNumber(submitData.NUMBER) && submitData.APIKEY) {
-
-                self.button.attr('disabled', 'disabled');
-
-                $.post("/login", submitData)
-                    .done(function(data) {
-
-                        if ( data.resp === 200 ) {
-
-                            data.body.solt = submitData.SOLT;
-                            new SendHub.AppView(data.body);
-                        } else {
-
-                            hlprs.sendMessage(data.resp);
-                        }
-                    })
-                    .fail(function() {
-
-                        hlprs.sendMessage("Server error");
-                    })
-                    .always(function() {
-
-                        self.button.removeAttr('disabled');
-                    });
-            } else {
-
-                hlprs.sendMessage("Validation is not passed");
+                return 'Missed required data.';
             }
         }
     });
 
-    new View();
-    SendHub.loginView = View;
+    SendHub.LoginView = SendHub.BaseView.extend({
+        el: $('#mainApp'),
+        events: {
+            'submit form#loginForm': 'loginAction',
+            'paste form#loginForm': 'pasteAction',
+            'keyup form#loginForm': 'changeAction',
+        },
+        initialize: function() {
+
+            this.render();
+        },
+        render: function() {
+            var
+                status,
+                initialData;
+
+            $(this.el).html(SendHub.tmpl.app.login());
+
+            this.button = $('#login');
+            this.form = $('form#loginForm');
+
+            initialData = hlprs.getSubmitData(this.form);
+            initialData.SOLT = initialData.APIKEY;
+
+            this.model.set(initialData);
+
+            status = this.model.isValid();
+            hlprs.toggleButton(this.button, status);
+        },
+        loginAction: function(ev) {
+            var
+                self = this;
+
+            ev.preventDefault();
+
+            hlprs.toggleButton(self.button, false);
+
+            this.model.save()
+                .done(function(data) {
+
+                    if ( data.resp === 200 ) {
+
+                        self.form.addClass('bounceOut');
+                        setTimeout(function() {
+
+                            new SendHub.SendView({
+                                contactList: data.body.objects,
+                                model: new SendHub.SendModel({solt: data.solt})
+                            });
+                        }, 500);
+                    } else {
+
+                        hlprs.sendMessage(data.resp);
+                        ffb.wrong(self.form);
+                    }
+                })
+                .fail(function() {
+
+                    hlprs.sendMessage('Server error');
+                    ffb.wrong(self.form);
+                });
+        }
+    });
+
+    new SendHub.LoginView({model: new SendHub.LoginModel()});
 });

@@ -22,14 +22,14 @@ gulp.task('lint', function() {
 
 gulp.task('js', function() {
     gulp.src([
-        './bower_components/handlebars/handlebars.runtime.js',
-        './build/tmpl.js',
-        './bower_components/jquery/dist/jquery.js',
-        './bower_components/underscore/underscore.js',
-        './bower_components/backbone/backbone.js',
-        './build/helpers.js',
-        './client_src/js/*.js'
-    ])
+            './bower_components/handlebars/handlebars.runtime.js',
+            './build/tmpl.js',
+            './bower_components/jquery/dist/jquery.js',
+            './bower_components/underscore/underscore.js',
+            './bower_components/backbone/backbone.js',
+            './build/helpers.js',
+            './client_src/js/*.js'
+        ])
         .pipe(concat('all.js'))
         .pipe(gulp.dest('./build'));
 });
@@ -47,7 +47,10 @@ gulp.task('hlprs', function() {
 });
 
 gulp.task('css', function() {
-    gulp.src('./client_src/css/*.css')
+    gulp.src([
+            './bower_components/animate.css/animate.css',
+            './client_src/css/*.css'
+        ])
         .pipe(concat('all.css'))
         .pipe(gulp.dest('./build'));
 });

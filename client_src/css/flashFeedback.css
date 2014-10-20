@@ -1,5 +1,6 @@
-form {
-	transition:background-color 0.5s ease;
+.okay,
+.wrong {
+	transition: background-color 0.2s ease;
 }
 
 .okay {

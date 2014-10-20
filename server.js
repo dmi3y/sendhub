@@ -146,7 +146,7 @@ app.post('/save', function(req, res) {
 app.post('/send', function(req, res) {
     var
         text = req.param('MESSAGE'),
-        contacts = req.param('CONTACTS'),
+        contacts = req.param('contacts'),
         solt = req.param('SOLT'),
         data = {
             "text": text,
@@ -184,7 +184,7 @@ app.post('/send', function(req, res) {
     }
 });
 
-server = app.listen(3000, function() {
+server = app.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function() {
     var
         host = server.address().address,
         port = server.address().port;
