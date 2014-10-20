@@ -1,0 +1,32 @@
+.wrapper {
+    width: 70%;
+    margin: 0 auto;
+    max-width: 604px;
+    min-width: 300px;
+}
+
+.login,
+.contacts,
+.sendbox {
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.contactList {
+	margin: 5px 0;
+	padding: 0;
+	list-style: none;
+}
+
+.contact {
+	font-size: 17px;
+	padding: 3px 5px;
+	margin: 3px 0;
+	background: #f1f1f1;
+	cursor: pointer;
+}
+
+.contact.selected {
+	background: #c3e4c3;
+}

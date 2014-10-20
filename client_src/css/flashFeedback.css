@@ -1,0 +1,10 @@
+form {
+	transition:background-color 0.5s ease;
+}
+
+.okay {
+	background: #71db71;
+}
+.wrong {
+	background: #f14b4b;
+}
