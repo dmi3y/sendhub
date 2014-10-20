@@ -5,7 +5,7 @@
   "main": "server.js",
   "author": "Dmitrii Lapshukov",
   "scripts": {
-    "postinstall": "echo postinstall time; ./node_modules/gulp/bin/gulp build"
+    "postinstall": "echo postinstall time; ./node_modules/gulp/bin/gulp.js build"
   },
   "dependencies": {
     "body-parser": "^1.9.0",
